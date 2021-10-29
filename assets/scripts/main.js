@@ -6,6 +6,7 @@ var game = new Chess()
 var $status = $('#status')
 var $fen = $('#fen')
 var $pgn = $('#pgn')
+var move_histroy = []
 
 function onDragStart (source, piece, position, orientation) {
   // do not pick up pieces if the game is over
@@ -69,6 +70,8 @@ function updateStatus () {
   $status.html(status)
   $fen.html(game.fen())
   $pgn.html(game.pgn())
+  move_histroy.push(board.position())
+  console.log(move_histroy)
 }
 
 function pieceTheme (piece) {
@@ -90,8 +93,11 @@ var config = {
   onSnapEnd: onSnapEnd
 }
 
-//function start_board(){
-  board = Chessboard('myBoard', config)
+board = Chessboard('myBoard', config)
 
-  updateStatus()
-//}
+updateStatus()
+
+$('#startBtn').on('click', board.start)
+$('#backBtn').on('click', function(){board.position(move_histroy.pop())})
+$('#forwardBtn').on('click', console.log("forward"))
+$('#clearBtn').on('click', board.clear)
