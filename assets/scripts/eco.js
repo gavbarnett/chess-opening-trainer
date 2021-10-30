@@ -1,4 +1,4 @@
-[
+var eco = [
     {
       "name": "Alekhine Defense",
       "eco": "B02",

@@ -6,6 +6,9 @@ var game = new Chess()
 var $status = $('#status')
 var $fen = $('#fen')
 var $pgn = $('#pgn')
+var $econumber = $('#econumber')
+var $econame = $('#econame')
+
 var move_histroy = []
 
 function onDragStart (source, piece, position, orientation) {
@@ -71,7 +74,10 @@ function updateStatus () {
   $fen.html(game.fen())
   $pgn.html(game.pgn())
   move_histroy.push(board.position())
-  console.log(move_histroy)
+  ecodata = lookup_eco(game.pgn())
+  console.log(ecodata)
+  $econumber.html(ecodata["eco"])
+  $econame.html(ecodata["name"])
 }
 
 function pieceTheme (piece) {
@@ -91,6 +97,21 @@ var config = {
   onDragStart: onDragStart,
   onDrop: onDrop,
   onSnapEnd: onSnapEnd
+}
+
+function lookup_eco(pgn){
+  ecodata = {
+    "name": "Not in database",
+    "eco": "Not in database",
+    "fen": "Not in database",
+    "moves": "Not in database"
+  }
+  for (ecocode of eco) {
+    if (ecocode["moves"] == pgn){
+      ecodata = ecocode
+    }
+  }
+  return (ecodata)
 }
 
 board = Chessboard('myBoard', config)
