@@ -9,7 +9,8 @@ var $pgn = $('#pgn')
 var $econumber = $('#econumber')
 var $econame = $('#econame')
 
-var move_histroy = []
+var movehistory = []
+var movefuture = []
 
 function onDragStart (source, piece, position, orientation) {
   // do not pick up pieces if the game is over
@@ -31,8 +32,15 @@ function onDrop (source, target) {
   })
 
   // illegal move
-  if (move === null) return 'snapback'
-
+  if (move === null) {
+    return 'snapback'
+  }else{
+    movehistory.push({
+      from: source,
+      to: target,
+      promotion: 'q' // NOTE: always promote to a queen for example simplicity
+    })
+  }
   updateStatus()
 }
 
@@ -73,9 +81,7 @@ function updateStatus () {
   $status.html(status)
   $fen.html(game.fen())
   $pgn.html(game.pgn())
-  move_histroy.push(board.position())
   ecodata = lookup_eco(game.pgn())
-  console.log(ecodata)
   $econumber.html(ecodata["eco"])
   $econame.html(ecodata["name"])
 }
@@ -118,7 +124,19 @@ board = Chessboard('myBoard', config)
 
 updateStatus()
 
-$('#startBtn').on('click', board.start)
-$('#backBtn').on('click', function(){board.position(move_histroy.pop())})
+
+$('#startBtn').on('click', function(){
+  board.start()
+  game = new Chess()
+})
+$('#backBtn').on('click', function(){ 
+  game = new Chess()
+  movefuture.push(movehistory.pop())
+  for (m of movehistory){
+    game.move(m)
+    updateStatus()
+  }
+  board.position(game.fen())
+})
 $('#forwardBtn').on('click', console.log("forward"))
 $('#clearBtn').on('click', board.clear)
