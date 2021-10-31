@@ -8,6 +8,7 @@ var $fen = $('#fen')
 var $pgn = $('#pgn')
 var $econumber = $('#econumber')
 var $econame = $('#econame')
+var $ecolist = $('#opening_games')
 
 var movehistory = []
 var movefuture = []
@@ -120,10 +121,21 @@ function lookup_eco(pgn){
   return (ecodata)
 }
 
-board = Chessboard('myBoard', config)
+function start(){
+  board = Chessboard('myBoard', config)
 
-updateStatus()
+  updateStatus()
+  
+  for (ecocode of eco) {
+    $('#opening_games').append('<option value="' + ecocode["name"] + '"> '+ ecocode["name"] + ' </option>')
+  } 
+}
 
+start()
+
+$("select.opening_games").change(function(){
+  var openingSelected = $(this).children("option:selected").val();
+});
 
 $('#startBtn').on('click', function(){
   board.start()
