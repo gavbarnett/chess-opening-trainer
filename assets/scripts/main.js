@@ -151,7 +151,6 @@ start()
 
 $('#opening_games').on('change', function() {
   var openingSelected = $(this).children("option:selected").val();
-  console.log(lookup_name(openingSelected))
   $('#opening_moves').val(lookup_name(openingSelected))
 });
 
