@@ -82,7 +82,10 @@ function updateStatus () {
 
   $status.html(status)
   $fen.html(game.fen())
-  $pgn.html(game.pgn())
+  $pgn.html("Blank")
+  if (game.png){
+    $pgn.html(game.pgn())
+  }
   ecodata = lookup_png(game.pgn())
   $econumber.html(ecodata["eco"])
   $econame.html(ecodata["name"])
