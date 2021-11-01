@@ -8,7 +8,8 @@ var $fen = $('#fen')
 var $pgn = $('#pgn')
 var $econumber = $('#econumber')
 var $econame = $('#econame')
-var $ecolist = $('#opening_games')
+var $opening_games = $('#opening_games')
+var $opening_moves = $('#opening_moves')
 
 var movehistory = []
 var movefuture = []
@@ -82,7 +83,7 @@ function updateStatus () {
   $status.html(status)
   $fen.html(game.fen())
   $pgn.html(game.pgn())
-  ecodata = lookup_eco(game.pgn())
+  ecodata = lookup_png(game.pgn())
   $econumber.html(ecodata["eco"])
   $econame.html(ecodata["name"])
 }
@@ -106,7 +107,7 @@ var config = {
   onSnapEnd: onSnapEnd
 }
 
-function lookup_eco(pgn){
+function lookup_png(pgn){
   ecodata = {
     "name": "Not in database",
     "eco": "Not in database",
@@ -116,6 +117,21 @@ function lookup_eco(pgn){
   for (ecocode of eco) {
     if (ecocode["moves"] == pgn){
       ecodata = ecocode
+    }
+  }
+  return (ecodata)
+}
+
+function lookup_name(name){
+  ecodata = {
+    "name": "Not in database",
+    "eco": "Not in database",
+    "fen": "Not in database",
+    "moves": "Not in database"
+  }
+  for (ecocode of eco) {
+    if (ecocode["name"] == name){
+      ecodata = ecocode["moves"]
     }
   }
   return (ecodata)
@@ -133,8 +149,10 @@ function start(){
 
 start()
 
-$("select.opening_games").change(function(){
+$('#opening_games').on('change', function() {
   var openingSelected = $(this).children("option:selected").val();
+  console.log(lookup_name(openingSelected))
+  $('#opening_moves').val(lookup_name(openingSelected))
 });
 
 $('#startBtn').on('click', function(){
