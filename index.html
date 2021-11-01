@@ -1,32 +1,33 @@
 <head>
     <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css" integrity="sha384-q94+BZtLrkL1/ohfjR8c6L+A6qzNH9R2hBLwyoAfu3i/WCvQjzL2RQJ3uNHDISdU" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/styles/styles.css">
 </head>
 
 <body>
-    <div id="configure">
-        <select id="opening_games" Name="Opening Name" Size="5" style="width: min(80vh,90vw); margin: auto;">  
-          </select>
-          <textarea id="opening_moves" style="width: min(80vh,90vw); margin: auto;"></textarea>
+    <div class="page-grid">
+        <select id="opening_games" Name="Opening Name" Size="5"></select>
+        <textarea id="opening_moves"></textarea>
+        <div id="myBoard" style="width: min(80vh,100vw); margin: auto;"></div>
+        <div id="buttons">
+            <button id="startBtn">Start Position</button>
+            <button id="backBtn">Back</button>
+            <button id="forwardBtn">Forward</button>
+            <button id="clearBtn">Clear Board</button>
+        </div>
+        <div id="info">
+            <label>Status:</label>
+            <div id="status"></div>
+            <label>FEN:</label>
+            <div id="fen"></div>
+            <label>PGN:</label>
+            <div id="pgn"></div>
+            <label>ECO:</label>
+            <div id="econumber"></div>
+            <label>ECO name:</label>
+            <div id="econame"></div>
+        </div>
     </div>
-    <div id="myBoard" style="width: min(80vh,90vw); margin: auto;"></div>
-    <div id="buttons">
-        <button id="startBtn">Start Position</button>
-        <button id="backBtn">Back</button>
-        <button id="forwardBtn">Forward</button>
-        <button id="clearBtn">Clear Board</button>
-    </div>
-    <div id="info">
-        <label>Status:</label>
-        <div id="status"></div>
-        <label>FEN:</label>
-        <div id="fen"></div>
-        <label>PGN:</label>
-        <div id="pgn"></div>
-        <label>ECO:</label>
-        <div id="econumber"></div>
-        <label>ECO name:</label>
-        <div id="econame"></div>
-    </div>
+    
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

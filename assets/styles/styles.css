@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Asap+Condensed&display=swap');
+
+body, select, textarea {
+    margin:0;
+    padding:0;
+    font-size: 1em; 
+    font-family: 'Asap Condensed', sans-serif;
+    color: white; 
+    background-color: #CE8D5D;
+}
+
+#opening_games { 
+    grid-area: opening_games;
+}
+#opening_moves { grid-area: opening_moves; }
+#myBoard { grid-area: myBoard; }
+#buttons { grid-area: buttons; }
+#info {grid-area: info;}
+
+
+
+.page-grid {
+    display: grid;
+    grid-template-areas:
+        'opening_games'
+        'opening_moves'
+        'myBoard'
+        'buttons'
+        'info';
+    grid-gap: 0px;
+    padding-bottom: 5px;
+    margin: auto; 
+    width: min(80vh,100vw);
+    background-color: #CE8D5D;
+}
+
+#buttons {
+    margin: auto;
+}
