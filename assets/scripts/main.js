@@ -3,7 +3,7 @@
 
 var board = null
 var game = new Chess()
-var chessengine
+var chessengine = new Worker('assets/scripts/lozza.js');
 
 var $status = $('#status')
 var $fen = $('#fen')
@@ -15,6 +15,12 @@ var $opening_moves = $('#opening_moves')
 
 var movehistory = []
 var movefuture = []
+
+chessengine.onmessage = function (e) {
+  console.log(e.data);
+  //parse messages from here as required
+  
+};
 
 function onDragStart (source, piece, position, orientation) {
   // do not pick up pieces if the game is over
@@ -45,6 +51,7 @@ function onDrop (source, target) {
       promotion: 'q' // NOTE: always promote to a queen for example simplicity
     })
   }
+  
   updateStatus()
 }
 
@@ -91,6 +98,8 @@ function updateStatus () {
   ecodata = lookup_png(game.pgn())
   $econumber.html(ecodata["eco"])
   $econame.html(ecodata["name"])
+  chessengine.postMessage('position fen ' + game.fen());
+  chessengine.postMessage('go depth 10')
 }
 
 function pieceTheme (piece) {
@@ -146,14 +155,9 @@ function start(){
   board = Chessboard('myBoard', config)
 
   updateStatus()
-  chessengine = new Worker('assets/scripts/lozza.js');
-
-  chessengine.onmessage = function (e) {
-    console.log(e.data);      //assuming jquery and a div called #dump
-                                    //parse messages from here as required
-  };
 
   chessengine.postMessage('uci');         // get build etc
+  chessengine.postMessage('position startpos');
 
   for (ecocode of eco) {
     $('#opening_games').append('<option value="' + ecocode["name"] + '"> '+ ecocode["name"] + ' </option>')
