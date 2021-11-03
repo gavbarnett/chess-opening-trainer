@@ -3,6 +3,8 @@
 
 var board = null
 var game = new Chess()
+var chessengine
+
 var $status = $('#status')
 var $fen = $('#fen')
 var $pgn = $('#pgn')
@@ -144,7 +146,15 @@ function start(){
   board = Chessboard('myBoard', config)
 
   updateStatus()
-  
+  chessengine = new Worker('assets/scripts/lozza.js');
+
+  chessengine.onmessage = function (e) {
+    console.log(e.data);      //assuming jquery and a div called #dump
+                                    //parse messages from here as required
+  };
+
+  chessengine.postMessage('uci');         // get build etc
+
   for (ecocode of eco) {
     $('#opening_games').append('<option value="' + ecocode["name"] + '"> '+ ecocode["name"] + ' </option>')
   } 
