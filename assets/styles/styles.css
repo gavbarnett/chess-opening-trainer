@@ -16,15 +16,9 @@ body, select, textarea {
 }
 #evalbar {
     height: 100%;
-    width: 0%;
+    width: 50%;
     background-color: var(--surface3);
-    animation: fill-bar 3s infinite;
 }
-
-@keyframes fill-bar {
-    from {width: 0%;}
-    to {width: 100%;}
-  }
 
 #opening_games { 
     grid-area: opening_games;

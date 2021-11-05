@@ -12,15 +12,41 @@ var $econumber = $('#econumber')
 var $econame = $('#econame')
 var $opening_games = $('#opening_games')
 var $opening_moves = $('#opening_moves')
+var $evalbar = $('#evalbar')
 
 var movehistory = []
 var movefuture = []
 
 chessengine.onmessage = function (e) {
-  console.log(e.data);
-  //parse messages from here as required
+  data = e.data.split(" ")
+  if (data[0] == 'bestmove'){
+    console.log('best move =>', data[1])
+  }
+  evaluation = 0
+  for (var i = 0; i < data.length; i++){
+    if (data[i] == "score"){
+      if (data[i+1] == "cp"){
+        evaluation = data[i+2]
+      } else if (data[i+1] == "mate"){
+        evaluation = data[i+2]
+      }
+      updateEvalbar(evaluation)
+    }
+
+  }
+ 
+  //console.log(e.data)
+}
+
+function updateEvalbar(evaluation){
+  evalwidth = Math.log10(Math.abs(evaluation))*Math.sign(evaluation)/Math.log10(30000)*50 + 50
+  console.log(evaluation, evalwidth)
+  $('#evalbar').animate({
+    width: evalwidth + '%'
+  }, 200);
   
-};
+  //width(evalwidth + '%')
+}
 
 function onDragStart (source, piece, position, orientation) {
   // do not pick up pieces if the game is over
@@ -99,7 +125,9 @@ function updateStatus () {
   $econumber.html(ecodata["eco"])
   $econame.html(ecodata["name"])
   chessengine.postMessage('position fen ' + game.fen());
-  chessengine.postMessage('go depth 10')
+  chessengine.postMessage('go depth 10');
+  //  chessengine.postMessage('go depth 10')
+
 }
 
 function pieceTheme (piece) {
@@ -154,10 +182,10 @@ function lookup_name(name){
 function start(){
   board = Chessboard('myBoard', config)
 
-  updateStatus()
-
   chessengine.postMessage('uci');         // get build etc
   chessengine.postMessage('position startpos');
+
+  updateStatus()
 
   for (ecocode of eco) {
     $('#opening_games').append('<option value="' + ecocode["name"] + '"> '+ ecocode["name"] + ' </option>')
