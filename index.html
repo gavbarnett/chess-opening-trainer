@@ -1,10 +1,14 @@
 <head>
     <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css" integrity="sha384-q94+BZtLrkL1/ohfjR8c6L+A6qzNH9R2hBLwyoAfu3i/WCvQjzL2RQJ3uNHDISdU" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/styles/colours.css">
     <link rel="stylesheet" href="assets/styles/styles.css">
 </head>
 
 <body>
     <div class="page-grid">
+        <div id="evalarea">
+            <div id="evalbar"></div>
+        </div>
         <select id="opening_games" Name="Opening Name" Size="5"></select>
         <textarea id="opening_moves"></textarea>
         <div id="myBoard" style="width: min(80vh,100vw); margin: auto;"></div>

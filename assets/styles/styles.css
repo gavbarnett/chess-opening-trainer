@@ -5,9 +5,26 @@ body, select, textarea {
     padding:0;
     font-size: 1em; 
     font-family: 'Asap Condensed', sans-serif;
-    color: white; 
-    background-color: #CE8D5D;
+    color: var(--text1); 
+    background-color: var(--brand);
 }
+
+#evalarea {
+    grid-area: evalarea;
+    height: 10vh;
+    background-color: var(--surface1);
+}
+#evalbar {
+    height: 100%;
+    width: 0%;
+    background-color: var(--surface3);
+    animation: fill-bar 3s infinite;
+}
+
+@keyframes fill-bar {
+    from {width: 0%;}
+    to {width: 100%;}
+  }
 
 #opening_games { 
     grid-area: opening_games;
@@ -22,6 +39,7 @@ body, select, textarea {
 .page-grid {
     display: grid;
     grid-template-areas:
+        'evalarea'
         'opening_games'
         'opening_moves'
         'myBoard'
@@ -31,7 +49,6 @@ body, select, textarea {
     padding-bottom: 5px;
     margin: auto; 
     width: min(80vh,100vw);
-    background-color: #CE8D5D;
 }
 
 #buttons {
