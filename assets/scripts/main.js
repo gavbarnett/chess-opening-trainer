@@ -13,6 +13,8 @@ var $econame = $('#econame')
 var $opening_games = $('#opening_games')
 var $opening_moves = $('#opening_moves')
 var $evalbar = $('#evalbar')
+var $evalwhite = $('#eval_white')
+var $evalblack = $('#eval_black')
 
 var movehistory = []
 var movefuture = []
@@ -42,13 +44,17 @@ chessengine.onmessage = function (e) {
 }
 
 function updateEvalbar(evaluation){
-  evalwidth = Math.log10(Math.abs(evaluation))*Math.sign(evaluation)/Math.log10(30000)*50 + 50
+  evalwidth = Math.min(50, evaluation/300*50) + 50
   console.log(evaluation, evalwidth)
-  $('#evalbar').animate({
-    width: evalwidth + '%'
-  }, 200);
-  
-  //width(evalwidth + '%')
+  if (evaluation > 0){
+    $('#eval_black').html('')
+    $('#eval_white').html((evaluation/100).toFixed(2))
+  } else {
+    $('#eval_black').html((evaluation/100).toFixed(2))
+    $('#eval_white').html('')
+  }
+  $('#evalbar').width(evalwidth + '%')
+
 }
 
 function onDragStart (source, piece, position, orientation) {

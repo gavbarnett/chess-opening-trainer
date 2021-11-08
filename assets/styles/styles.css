@@ -11,13 +11,34 @@ body, select, textarea {
 
 #evalarea {
     grid-area: evalarea;
-    height: 10vh;
+    height: 2.5vh;
     background-color: var(--surface1);
+    position: relative;
 }
 #evalbar {
+    position: absolute;
     height: 100%;
     width: 50%;
     background-color: var(--surface3);
+    transition: width 0.1s;
+}
+#eval_white {
+    position: absolute;
+    text-align: left;
+    vertical-align: middle;
+    box-sizing: border-box;
+    padding-left: 1em;
+    height: 100%;
+    width: 100%;
+}
+#eval_black {
+    position: absolute;
+    text-align: right;
+    vertical-align: middle;
+    box-sizing: border-box;
+    padding-right: 1em;
+    height: 100%;
+    width: 100%;
 }
 
 #opening_games { 
