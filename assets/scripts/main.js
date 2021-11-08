@@ -30,6 +30,9 @@ chessengine.onmessage = function (e) {
       } else if (data[i+1] == "mate"){
         evaluation = data[i+2]
       }
+      if (game.turn() == 'b'){
+        evaluation = evaluation * -1
+      }
       updateEvalbar(evaluation)
     }
 
