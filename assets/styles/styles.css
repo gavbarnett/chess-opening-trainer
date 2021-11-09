@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Asap+Condensed&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+.material-icons.md-48 { font-size: 48px; }
 
 body, select, textarea {
     margin:0;
@@ -78,4 +81,17 @@ body, select, textarea {
 
 #buttons {
     margin: auto;
+}
+
+button {
+    background-color:var(--surface3);
+    border: none;
+    color: var(--text1);
+    font-size: 10em;
+    cursor: pointer;
+}
+  
+/* Darker background on mouse-over */
+button:hover {
+    background-color: var(--surface4);
 }
