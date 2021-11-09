@@ -173,11 +173,18 @@ function lookup_png(pgn){
     "fen": "Not in database",
     "moves": "Not in database"
   }
-  for (ecocode of eco) {
+  match = false
+  
+  for (ecocode of eco){
     if (ecocode["moves"] == pgn){
       ecodata = ecocode
+      match = true
+    } else if (ecocode["moves"].includes(pgn) && match == false){
+      ecodata = ecocode
+      match = true
     }
   }
+  
   return (ecodata)
 }
 
