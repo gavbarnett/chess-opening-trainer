@@ -15,6 +15,8 @@ var $opening_moves = $('#opening_moves')
 var $evalbar = $('#evalbar')
 var $evalwhite = $('#eval_white')
 var $evalblack = $('#eval_black')
+var $openingname = $('#main_opening_name')
+var $openingvariant = $('#varaint_opening_name')
 
 var movehistory = []
 var movefuture = []
@@ -133,6 +135,12 @@ function updateStatus () {
   ecodata = lookup_png(game.pgn())
   $econumber.html(ecodata["eco"])
   $econame.html(ecodata["name"])
+  opening_name = ecodata["name"].split(':')
+  $('#main_opening_name').html(opening_name[0])
+  $('#variant_opening_name').html('')
+  if (opening_name.length>1){
+    $('#variant_opening_name').html('( ' + opening_name[1] + ')')
+  }
   chessengine.postMessage('position fen ' + game.fen());
   chessengine.postMessage('go depth 10');
   //  chessengine.postMessage('go depth 10')

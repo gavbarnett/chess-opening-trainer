@@ -48,18 +48,28 @@ body, select, textarea {
 #myBoard { grid-area: myBoard; }
 #buttons { grid-area: buttons; }
 #info {grid-area: info;}
-
-
-
+#opening_name {
+    grid-area: openingName;
+    height: 9em;
+    text-align: center;
+    background-color: var(--brand);
+}
+#main_opening_name {
+    font-size: 5em;
+}
+#variant_opening_name {
+    font-size: 2em;
+}
 .page-grid {
     display: grid;
     grid-template-areas:
+        'openingName'
         'evalarea'
-        'opening_games'
-        'opening_moves'
         'myBoard'
         'buttons'
-        'info';
+        'info'
+        'opening_games'
+        'opening_moves';
     grid-gap: 0px;
     padding-bottom: 5px;
     margin: auto; 
