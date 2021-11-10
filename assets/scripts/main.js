@@ -20,11 +20,15 @@ var $openingvariant = $('#varaint_opening_name')
 
 var movehistory = []
 var movefuture = []
+var player_colour = 'w'
 
 chessengine.onmessage = function (e) {
   data = e.data.split(" ")
   if (data[0] == 'bestmove'){
     console.log('best move =>', data[1])
+    if (game.turn() != player_colour){
+      makeAIMove(data[1])
+    }
   }
   evaluation = 0
   for (var i = 0; i < data.length; i++){
@@ -43,6 +47,19 @@ chessengine.onmessage = function (e) {
   }
  
   //console.log(e.data)
+}
+
+function makeAIMove (bestmove) {
+  var possibleMoves = game.moves()
+
+  // game over
+  if (possibleMoves.length === 0) return
+  probability_of_bestmove = 0.9
+  array_extension = Math.round((possibleMoves.length/(1-probability_of_bestmove))*probability_of_bestmove)
+  possibleMoves = possibleMoves.concat(Array(array_extension).fill(bestmove))
+  var randomIdx = Math.floor(Math.random() * possibleMoves.length)
+  game.move(possibleMoves[randomIdx], { sloppy: true })
+  board.position(game.fen())
 }
 
 function updateEvalbar(evaluation){
@@ -207,6 +224,7 @@ function start(){
   board = Chessboard('myBoard', config)
 
   chessengine.postMessage('uci');         // get build etc
+  chessengine.postMessage('setoption name MultiPV value 10')
   chessengine.postMessage('position startpos');
 
   updateStatus()
