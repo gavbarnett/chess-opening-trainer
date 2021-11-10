@@ -70,8 +70,12 @@ function makeAIMove (bestmove) {
   array_extension = Math.round((possibleMoves.length/(1-probability_of_bestmove))*probability_of_bestmove)
   possibleMoves = possibleMoves.concat(Array(array_extension).fill(bestmove))
   var randomIdx = Math.floor(Math.random() * possibleMoves.length)
+  selected_move = possibleMoves[randomIdx]
   game.move(possibleMoves[randomIdx], { sloppy: true })
   board.position(game.fen())
+  movehistory.push(
+    selected_move
+  )
   updateStatus()
 }
 
@@ -257,12 +261,14 @@ $('#opening_games').on('change', function() {
 $('#startBtn').on('click', function(){
   board.start()
   game = new Chess()
+  movehistory = []
 })
 $('#backBtn').on('click', function(){ 
   game = new Chess()
   movefuture.push(movehistory.pop())
+  movefuture.push(movehistory.pop()) //pop twice to avoid AI replaying
   for (m of movehistory){
-    game.move(m)
+    game.move(m, { sloppy: true })
     updateStatus()
   }
   board.position(game.fen())
