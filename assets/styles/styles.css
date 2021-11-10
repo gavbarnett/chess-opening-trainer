@@ -3,6 +3,10 @@
 
 .material-icons.md-48 { font-size: 48px; }
 
+body{
+    overscroll-behavior: contain;
+}
+
 body, select, textarea {
     margin:0;
     padding:0;
