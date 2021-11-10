@@ -37,6 +37,7 @@ body, select, textarea {
     padding-left: 1em;
     height: 100%;
     width: 100%;
+    font-size: 2.2vh;
 }
 #eval_black {
     position: absolute;
@@ -46,6 +47,7 @@ body, select, textarea {
     padding-right: 1em;
     height: 100%;
     width: 100%;
+    font-size: 2.2vh;
 }
 
 #opening_games { 
