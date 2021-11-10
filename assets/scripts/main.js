@@ -22,15 +22,13 @@ var movehistory = []
 var movefuture = []
 var player_colour = 'w'
 
+var evaluation = 0
+var old_eval = 0
+
 chessengine.onmessage = function (e) {
   data = e.data.split(" ")
-  if (data[0] == 'bestmove'){
-    console.log('best move =>', data[1])
-    if (game.turn() != player_colour){
-      makeAIMove(data[1])
-    }
-  }
-  evaluation = 0
+  
+  
   for (var i = 0; i < data.length; i++){
     if (data[i] == "score"){
       if (data[i+1] == "cp"){
@@ -43,7 +41,21 @@ chessengine.onmessage = function (e) {
       }
       updateEvalbar(evaluation)
     }
-
+  }
+  
+  if (data[0] == 'bestmove'){
+    console.log('best move =>', data[1])
+    if (game.turn() != player_colour){
+      if (old_eval > evaluation){ //only works if playing as white
+        //blunder
+        console.log("BLUNDER?!")
+      } else {
+        console.log("good move.", old_eval, evaluation)
+        //good move
+      }
+      old_eval = evaluation
+      makeAIMove(data[1])
+    }
   }
  
   //console.log(e.data)
@@ -60,11 +72,12 @@ function makeAIMove (bestmove) {
   var randomIdx = Math.floor(Math.random() * possibleMoves.length)
   game.move(possibleMoves[randomIdx], { sloppy: true })
   board.position(game.fen())
+  updateStatus()
 }
 
 function updateEvalbar(evaluation){
   evalwidth = Math.min(50, evaluation/300*50) + 50
-  console.log(evaluation, evalwidth)
+  //console.log(evaluation, evalwidth)
   if (evaluation > 0){
     $('#eval_black').html('')
     $('#eval_white').html((evaluation/100).toFixed(2))
